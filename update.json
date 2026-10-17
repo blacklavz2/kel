@@ -1,7 +1,7 @@
 {
   "version": "1.0.1",
   "size": "73 MB",
-  "force": true,
+  "force": False,
   "url": "https://ORNEK-ADRES/keltostv.exe",
   "sha256": "indirdigin-exe-nun-sha256-ozeti",
   "notes": ["Yeni sürümde yapılan değişiklikleri buraya yaz.", "Her satır ekranda ayrı madde olarak görünür."]
