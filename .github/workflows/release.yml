@@ -1,0 +1,53 @@
+name: Yeni sürüm yayınla
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['update.json']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Sürümü oku
+        id: v
+        shell: bash
+        run: |
+          VER=$(node -p "require('./package.json').version")
+          echo "ver=$VER" >> "$GITHUB_OUTPUT"
+          if git ls-remote --exit-code --tags origin "refs/tags/v$VER" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Exe üret
+        if: steps.v.outputs.exists == 'false'
+        shell: bash
+        run: |
+          npm install
+          npm run build
+
+      - name: Yayınla ve update.json'u güncelle
+        if: steps.v.outputs.exists == 'false'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VER="${{ steps.v.outputs.ver }}"
+          node scripts/make-update.js "$VER" "${{ github.repository }}"
+          gh release create "v$VER" dist/keltostv.exe --title "v$VER" --notes-file surum-notlari.txt
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add update.json
+          git commit -m "update.json v$VER [skip ci]"
+          git push
