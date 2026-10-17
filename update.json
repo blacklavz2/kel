@@ -1,10 +1,10 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "size": "68 MB",
   "force": false,
-  "url": "https://github.com/blacklavz2/kel/releases/download/v1.0.1/keltostv.exe",
-  "sha256": "88a3fcc20ad85d843a719a5d799654f7aa964b7b20be37b69739e2e4d41962ce",
+  "url": "https://github.com/blacklavz2/kel/releases/download/v1.0.2/keltostv.exe",
+  "sha256": "bfcdc26226d7b6ed08348213f050750368f95e89731165bbb73990b273495b99",
   "notes": [
-    "Deneme Güncellemesi"
+    "Güncelleme sistemi düzeltildi."
   ]
 }
